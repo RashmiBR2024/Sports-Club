@@ -32,53 +32,84 @@ const Navbar = () => {
           justifyContent: 'space-between',
         }}
       >
-        <div>
+
+<div
+    style={{
+      position: 'absolute',
+      top: '50%', // Adjust to place it behind the logo
+      left: 0,
+       marginTop: '20px',
+      width: '100%',
+      height: '1px',
+      backgroundColor: '#ccc', // Line color
+      zIndex: 0, // Ensure it stays behind the logo
+    }}
+  ></div>
+       <div style={{ zIndex: 1,marginTop: '60px', textAlign: 'center' }}>
           <Image
-            src="/sports_logo/app_bar_logo_B.png"
+            src="/sports_logo/sandhut_sports_club_W.png"
             alt="SandHut Sports Club Logo"
-            width={250}
-            height={60}
+            width={200}
+            height={40}
             objectFit="contain"
           />
         </div>
-        <div className="desktop-menu">
-          <Menu
-            mode="horizontal"
-            defaultSelectedKeys={['1']}
-            style={{
-              borderBottom: 'none',
-              lineHeight: '64px',
-              backgroundColor: 'transparent',
-              color: '#000', // Changed to black text for better contrast on white background
-            }}
-          >
-            <Menu.Item key="1">
-              <Link href="#about" scroll={false}>
-                About Us
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Link href="#benefits" scroll={false}>
-                Membership Benefits
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Link href="#testimonials" scroll={false}>
-                Testimonials
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Link href="#location" scroll={false}>
-                Location
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="5">
-              <Link href="#contact" scroll={false}>
-                Contact Us
-              </Link>
-            </Menu.Item>
-          </Menu>
-        </div>
+        <div
+  style={{
+    display: 'flex',
+    justifyContent: 'center', // Centers the menu horizontally
+    alignItems: 'center',    // Centers content vertically (optional, if needed)
+    height: '100%',          // Ensures vertical centering works properly
+  }}
+>
+  <div className="desktop-menu" style={{ position: 'relative', left: '-170px' }} > {/* Removed unnecessary padding */}
+    <Menu
+      mode="horizontal"
+      defaultSelectedKeys={['1']}
+      style={{
+        borderBottom: 'none',
+        lineHeight: '64px',
+        backgroundColor: 'transparent',
+        color: '#000',
+      }}
+    >
+
+      
+      <Menu.Item key="1">
+        <Link href="#about" scroll={false}>
+          Club Players
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Link href="#benefits" scroll={false}>
+          Points Table
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <Link href="#testimonials" scroll={false}>
+          Teams
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="4">
+        <Link href="#testimonials" scroll={false}>
+          Matches
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="5">
+        <Link href="#location" scroll={false}>
+          News
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="6">
+        <Link href="#contact" scroll={false}>
+          More
+        </Link>
+      </Menu.Item>
+    </Menu>
+  </div>
+</div>
+
+
         <div className="mobile-menu">
           <Button
             type="primary"

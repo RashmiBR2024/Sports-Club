@@ -104,8 +104,8 @@ export default function Dashboard() {
               <Menu.Item key="2">Bill</Menu.Item>
               <Menu.Item key="3">Alex</Menu.Item>
             </Menu.SubMenu>
-            <Menu.SubMenu key="sub2" icon={<LaptopOutlined />} title="Team">
-              <Menu.Item key="4">Team 1</Menu.Item>
+            <Menu.SubMenu key="sub2" icon={<LaptopOutlined />} title="Product">
+              <Menu.Item key="4">Product List </Menu.Item>
               <Menu.Item key="5">Team 2</Menu.Item>
             </Menu.SubMenu>
             <Menu.SubMenu key="sub3" icon={<NotificationOutlined />} title="Files">

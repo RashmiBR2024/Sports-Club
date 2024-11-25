@@ -15,15 +15,19 @@
     "@aws-sdk/s3-request-presigner": "^3.633.0",
     "@radix-ui/themes": "^3.0.5",
     "antd": "^5.20.1",
-    "axios": "^1.7.2",
+    "axios": "^1.7.7",
+    "cheerio": "^1.0.0-rc.10",
     "cookies": "^0.9.1",
     "dotenv": "^16.4.5",
     "firebase": "^10.12.2",
     "firebase-admin": "^12.1.1",
+    "framer-motion": "^11.11.17",
     "js-cookie": "^3.0.5",
+    "jsdom": "^25.0.1",
     "mongoose": "^8.4.1",
     "nanoid": "^5.0.7",
     "next": "14.2.3",
+    "node-fetch": "^3.3.2",
     "razorpay": "^2.9.4",
     "react": "^18",
     "react-dom": "^18"
@@ -32,6 +36,6 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.14"
   }
 }
