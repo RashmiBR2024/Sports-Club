@@ -20,7 +20,7 @@ export default function EmailLogin() {
 
   const onFinish = (values) => {
     const hardCodedUsername = 'user@example.com';
-    const hardCodedPassword = 'Nanda@6360713733';
+    const hardCodedPassword = '7337649008';
 
     if (values.email === hardCodedUsername && values.password === hardCodedPassword) {
       setLoading(true);

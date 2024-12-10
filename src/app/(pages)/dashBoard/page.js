@@ -1,11 +1,14 @@
 "use client";
 
+
 import { useState, useEffect } from 'react';
 import { Layout, Menu, Breadcrumb, Modal } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import ProductList from '../products/page';
+import Banner from '../addBanner/page';
+import ViewBanner from '../viewBanners/page';
 
 const { Header, Content, Sider } = Layout;
 
@@ -19,7 +22,7 @@ export default function Dashboard() {
     // Check if the cookie 'lG' is set to 'true'
     const loginStatus = Cookies.get('lG');
     if (loginStatus !== 'true') {
-      router.push('/auth/email'); // Redirect to login if not logged in
+      router.push('/auth/email'); 
     }
   }, [router]);
 
@@ -28,7 +31,7 @@ export default function Dashboard() {
       showLogoutModal();
     } else {
       console.log(`Clicked on ${menu.key}`);
-      setSelectedContent(menu.key); // Update the selected content state
+      setSelectedContent(menu.key); 
     }
   };
 
@@ -49,7 +52,7 @@ export default function Dashboard() {
   const renderContent = () => {
     switch (selectedContent) {
       case '1':
-        return <div>User Profile: Tom</div>;
+        return <div><User /></div>;
       case '2':
         return <div>User Profile: Bill</div>;
       case '3':
@@ -59,9 +62,9 @@ export default function Dashboard() {
       case '5':
         return <div>Team 2 Details</div>;
       case '6':
-        return <div>File 1 Information</div>;
+        return <div><Banner/></div>;
       case '7':
-        return <div>File 2 Information</div>;
+        return <div><ViewBanner/></div>;
       default:
         return <div>Welcome to the Dashboard!</div>;
     }
@@ -100,7 +103,7 @@ export default function Dashboard() {
             onClick={handleMenuClick}
           >
             <Menu.SubMenu key="sub1" icon={<UserOutlined />} title="User">
-              <Menu.Item key="1">Tom</Menu.Item>
+              <Menu.Item key="1">Add Users</Menu.Item>
               <Menu.Item key="2">Bill</Menu.Item>
               <Menu.Item key="3">Alex</Menu.Item>
             </Menu.SubMenu>
@@ -108,9 +111,9 @@ export default function Dashboard() {
               <Menu.Item key="4">Product List </Menu.Item>
               <Menu.Item key="5">Team 2</Menu.Item>
             </Menu.SubMenu>
-            <Menu.SubMenu key="sub3" icon={<NotificationOutlined />} title="Files">
-              <Menu.Item key="6">File 1</Menu.Item>
-              <Menu.Item key="7">File 2</Menu.Item>
+            <Menu.SubMenu key="sub3" icon={<NotificationOutlined />} title="Managments">
+              <Menu.Item key="6">Banner</Menu.Item>
+              <Menu.Item key="7">All Banners</Menu.Item>
             </Menu.SubMenu>
           </Menu>
         </Sider>
@@ -120,6 +123,7 @@ export default function Dashboard() {
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+            <Breadcrumb.Item></Breadcrumb.Item>
           </Breadcrumb>
           <Content
             style={{
