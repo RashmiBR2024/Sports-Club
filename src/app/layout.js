@@ -2,7 +2,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import '@radix-ui/themes/styles.css';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-
+import Navbar from './components/Navbar';
+import CustomFooter from './components/Footer';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,9 +19,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <link rel="icon" href="/sandhut_sports_club_W.png" sizes="any" />
+      <link rel="icon" href="SSC icon.ico" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Prosto+One&display=swap"
+        rel="stylesheet"
+      />
         <AntdRegistry>
+          <Navbar/>
           {children}
+          <CustomFooter/>
         </AntdRegistry>
       </body>
     </html>
