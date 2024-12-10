@@ -142,6 +142,11 @@ const CustomFooter = () => {
                   News
                 </a>
               </Text>
+              <Text className="text-[#bbb] text-sm">
+                <a href="/auth/email" className="text-[#bbb] hover:text-white" style={{ color: "#ffffff", textDecoration: "underline"}}>
+                  Login
+                </a>
+              </Text>
             </Space>
           </Col>
         </Row>

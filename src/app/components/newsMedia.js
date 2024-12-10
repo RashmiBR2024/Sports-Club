@@ -62,41 +62,43 @@ const VideoScroll = () => {
   if (videos.length === 0) return <div>No videos available.</div>;
 
   return (
-    <section className="horizontal-scroll">
+    <section>
+      <div className="horizontal-scroll">
       <div className="header">
-        <h1>News / Media</h1>
+        <h1 style={{ fontFamily: "'Prosto One', sans-serif", fontSize: "30px" }}>News / Media</h1>
       </div>
       <div className="news-block">
-      <div className={`new-slider ${videos.length <= 4 ? "paused" : ""}`}>
-        <div className="video-scroll-wrapper">
-          {videos.map((video, index) => (
-            <div
-              key={index}
-              className="video-container"
-              onClick={() => handleVideoClick(video.content_url)}
-            >
-              <img
-                src={`https://img.youtube.com/vi/${getVideoId(video.content_url)}/0.jpg`}
-                alt={`Video ${index + 1}`}
-                className="video-thumbnail"
-              />
-            </div>
-          ))}
-        </div>
-        <div className="video-scroll-wrapper">
-          {videos.map((video, index) => (
-            <div
-              key={index}
-              className="video-container"
-              onClick={() => handleVideoClick(video.content_url)}
-            >
-              <img
-                src={`https://img.youtube.com/vi/${getVideoId(video.content_url)}/0.jpg`}
-                alt={`Video ${index + 1}`}
-                className="video-thumbnail"
-              />
-            </div>
-          ))}
+        <div className={`new-slider ${videos.length <= 4 ? "paused" : ""}`}>
+          <div className="video-scroll-wrapper">
+            {/* Original set of videos */}
+            {videos.map((video, index) => (
+              <div
+                key={`video-${index}`}
+                className="video-container"
+                onClick={() => handleVideoClick(video.content_url)}
+              >
+                <img
+                  src={`https://img.youtube.com/vi/${getVideoId(video.content_url)}/0.jpg`}
+                  alt={`Video ${index + 1}`}
+                  className="video-thumbnail"
+                />
+              </div>
+            ))}
+            {/* Duplicate set of videos for infinite scrolling */}
+            {videos.map((video, index) => (
+              <div
+                key={`duplicate-video-${index}`}
+                className="video-container"
+                onClick={() => handleVideoClick(video.content_url)}
+              >
+                <img
+                  src={`https://img.youtube.com/vi/${getVideoId(video.content_url)}/0.jpg`}
+                  alt={`Video Duplicate ${index + 1}`}
+                  className="video-thumbnail"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       </div>
