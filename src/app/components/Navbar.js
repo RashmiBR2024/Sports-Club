@@ -11,9 +11,10 @@ const Navbar = () => {
   const menuItems = [
     { label: "Home", key: "/", link: "/" },
     { label: "Club Players", key: "/allPlayers", link: "/allPlayers" },
-    { label: "Points Table", key: "/points-table", link: "/points-table" },
+    // { label: "Points Table", key: "/points-table", link: "/points-table" },
     { label: "Teams", key: "/teams", link: "/teams" },
     { label: "Matches", key: "/matches", link: "/matches" },
+    { label: "Buy Products", key: "products", link: "https://sandhutsportsclub.com/products" },
     // You can add a submenu if needed, for now it's commented out
     // { label: "More", key: "/more", link: "/more", subMenu: [...] }
   ];

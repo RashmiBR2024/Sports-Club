@@ -62,10 +62,10 @@ const VideoScroll = () => {
   if (videos.length === 0) return <div>No videos available.</div>;
 
   return (
-    <section>
+    <section className="news-section">
       <div className="horizontal-scroll">
       <div className="header">
-        <h1 style={{ fontFamily: "'Prosto One', sans-serif", fontSize: "30px" }}>News / Media</h1>
+        <h1 style={{ fontFamily: "'Prosto One', sans-serif", fontSize: "30px", marginTop: "50px"}}>News / Media</h1>
       </div>
       <div className="news-block">
         <div className={`new-slider ${videos.length <= 4 ? "paused" : ""}`}>

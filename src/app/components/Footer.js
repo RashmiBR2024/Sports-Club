@@ -161,7 +161,7 @@ const CustomFooter = () => {
           {/* Second Column - Links like Privacy Policy, Terms & Conditions */}
           <div className="text-xs text-gray-400">
             <a
-              href="/privacy-policy"
+              href="/privacyPolicy"
               className="text-white hover:text-white underline mr-4"
             >
               Privacy Policy
