@@ -1,0 +1,298 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background-color: #f9f9f9;
+}
+
+/* banner section */
+.banner-slider {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto; /* Adjust height as needed */
+  overflow: hidden;
+  margin-top: 6%;
+  margin-bottom: 10px;
+  touch-action: pan-y; /* Allows horizontal swiping */
+}
+
+/* Container for the banner */
+.main-banner-container {
+  position: relative; /* Ensures stacking of child elements */
+  width: 100%;
+  height: 40vw; /* Adjust as per your needs */
+  overflow: hidden; /* Ensure no overflow from children */
+}
+
+/* Transparent background image */
+.main-banner-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover; /* Ensure the image covers the container */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Avoid repeating */
+  opacity: 0.1; /* Set transparency level for the background */
+  z-index: 0; /* Ensure it stays behind the foreground image */
+}
+
+/* Foreground image (no transparency) */
+.main-banner-image {
+  position: relative; /* Ensure it stacks above the background */
+  display: block; /* Ensures the image behaves like a block element */
+  max-width: 100%; /* Scale the image to fit the container's width */
+  max-height: 100%; /* Scale the image to fit the container's height */
+  margin: auto; /* Centers the image horizontally and vertically if the container uses flexbox */
+  width: auto; /* Let it adjust naturally */
+  height: 100%; /* Scale the image to fit vertically */
+  z-index: 1; /* Place it above the transparent background */
+  border-radius: 15px; /* Adjust radius as needed for roundness */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.06);
+  border: transparent; /* Adjust color and thickness */
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 2px;
+  height: auto;
+  object-fit: fill;
+}
+
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(128, 128, 128, 0.194);
+  border-radius: 50%;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 3; /* Ensure arrows are above image */
+}
+
+.arrow.left {
+  left: 10px;
+}
+
+.arrow.right {
+  right: 10px;
+}
+
+.thumbnails-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 0;
+  background: transparent;
+  z-index: 10;
+}
+
+/* .thumbnail {
+  width: 50px;
+  height: 40px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+  cursor: pointer;
+}
+
+.thumbnail.active {
+  transform: scale(1.5);
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fff;
+}
+
+.thumbnail.inactive {
+  transform: scale(0.8);
+} */
+
+@media (max-width: 768px) {
+  .banner-slider {
+    height: 200px; /* Adjusted height for mobile */
+  }
+
+  .main-banner-image {
+    object-fit: cover; /* Ensure image fills the container */
+  }
+
+  .banner-slider{
+    margin-top: 70px;
+  }
+  
+  .thumbnail {
+    height: 20px;
+    transition: transform 0.3s ease, width 0.5  s ease, height 0.2s ease;
+  }
+
+  .thumbnail.active {
+    transform: scale(1.5);
+    width: 20px;
+  }
+
+  .arrow {
+    width: auto; /* Smaller width for arrows on mobile */
+    height: auto; /* Smaller height for arrows on mobile */
+  }
+
+  .main-banner-container iframe {
+    height: 130px;
+  }
+
+  .arrow svg {
+    font-size: 16px; /* Smaller font size for the icons */
+  }
+}
+
+/* ------------------------------- */
+/* what are you looking for */
+.tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 10px 100px;
+  background-color: #f9f9f9;
+}
+
+.tabs h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.card-container .ant-card {
+  width: 240px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.card-container img {
+  height: 180px;
+  object-fit: cover;
+}
+
+a {
+  text-decoration: none;
+}
+
+.card-container {
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+.card-container:hover {
+  transform: scale(1.15); /* Scale the card on hover */
+}
+
+/* news /media queries */
+/* Container for the entire horizontal scroll section */
+/* .horizontal-scroll { */
+  /* overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.video-scroll-wrapper {
+  display: flex; /* Ensure all video items are laid out horizontally */
+  /* animation: scrollVideos 15s linear infinite; /* Continuous scrolling */
+/* } */ 
+
+/* .video-container { */
+  /* display: inline-block;  */
+  /* margin-right: 10px;  */
+  /* cursor: pointer; */
+/* } */
+
+/* .video-thumbnail { */
+  /* width: 120px; Set the width of the thumbnails */
+  /* height: auto; */
+/* } */
+
+/* @keyframes scrollVideos { */
+  /* 0% { */
+    /* transform: translateX(0); */
+  /* } */
+  /* 100% { */
+    /* transform: translateX(-100%); Adjust for full scroll */
+  /* } */
+/* } */
+
+/* Adjust animation for fewer videos (disable animation if there are 4 or fewer videos) */
+/* .video-scroll-wrapper.paused { */
+  /* animation: none; */
+/* } */ 
+
+.news-block{
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+}
+
+
+.new-slider{
+  height: auto;
+  margin: auto;
+  position: relative;
+  width: 97%;
+  display: grid;
+  place-items: center;
+}
+
+.video-scroll-wrapper{
+  display: flex;
+  width: calc(250px * 18);
+}
+
+.video-container{
+  height: 200px;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  perspective: 100px;
+}
+
+.video-container img{
+  width: 100%;
+  transition: transform 1s ease;
+}
+
+.video-container img:hover{
+  transform: translateZ(20px);
+}
+
+.new-slider::before,
+.new-slider::after{
+  background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+  content: '';
+  height: 100%;
+  position: absolute;
+  width: 15%;
+  z-index: 2;
+}
+
+.new-slider::before{
+  left: 0;
+  top: 0;
+}
+
+.new-slider::after{
+  right: 0;
+  top: 0;
+  transform: rotateZ(180deg);
+}
