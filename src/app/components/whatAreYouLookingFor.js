@@ -33,7 +33,7 @@ const WhatAreYouLookingFor = () => {
       image:
         "https://www.shutterstock.com/image-vector/cricket-team-logo-creative-icon-600w-1952590060.jpg",
       title: "Teams",
-      link: "/teams",
+      link: "/allTeams",
     },
     {
       id: 4,

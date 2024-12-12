@@ -12,7 +12,7 @@ const Navbar = () => {
     { label: "Home", key: "/", link: "/" },
     { label: "Club Players", key: "/allPlayers", link: "/allPlayers" },
     // { label: "Points Table", key: "/points-table", link: "/points-table" },
-    { label: "Teams", key: "/teams", link: "/teams" },
+    { label: "Teams", key: "/teams", link: "/allTeams" },
     { label: "Matches", key: "/matches", link: "/matches" },
     { label: "Buy Products", key: "products", link: "https://sandhutsportsclub.com/products" },
     // You can add a submenu if needed, for now it's commented out

@@ -69,7 +69,7 @@ const SponsorsAndDeals = () => {
       </div>
       <div className="news-block">
         <div className={`new-slider ${videos.length <= 4 ? "paused" : ""}`}>
-          <div className="video-scroll-wrapper">
+          <div className="sponsor-video-scroll-wrapper">
             {/* Original set of videos */}
             {videos.map((video, index) => (
               <div

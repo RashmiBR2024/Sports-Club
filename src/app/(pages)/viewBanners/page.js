@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { Table, Button, Pagination, Tooltip, Tag } from "antd";
 import { EditOutlined } from "@ant-design/icons";

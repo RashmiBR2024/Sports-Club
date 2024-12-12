@@ -4,6 +4,7 @@ import Location from "./components/Location";
 import FollowUs from "./components/FollowUs";
 import NewsMediaSection from "./components/newsMedia";
 import SponsorsAndDeals from "./components/sponsorsAndDeals";
+import TopPerformerForm from "./components/TopPerformers";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <BannerSlider/>
       <WhatAreYouLookingFor/>
       <NewsMediaSection/>
+      <TopPerformerForm/>
       <SponsorsAndDeals/>
       <Location/>
       <FollowUs/>
