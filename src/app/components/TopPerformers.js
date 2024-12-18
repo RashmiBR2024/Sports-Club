@@ -10,13 +10,13 @@ const prostoOne = Prosto_One({
 const TopPerformer = () => {
   return (
     <div className="topperformer-container">
-      <h1 className={`${prostoOne.className} topperformer-heading`}>Top Performers</h1>
+      <h1 className={`${prostoOne.className} topperformer-heading text-left`}>Top Performers</h1>
 
-      <div className="topperformer-content">
-        {/* Player Image Section */}
+      <div className="topperformer-content flex justify-center items-center">
+      {/* Player Image Section */}
         <div className="topperformer-image">
           <img
-            src="https://i.pinimg.com/736x/e5/34/b6/e534b615e917b44129d86b28fa8a6a48.jpg"
+            src="https://trueledger.s3.ap-south-1.amazonaws.com/JtnXG-8J0Gr05Lpjz0QpO.png"
             alt="Top Performer"
             className="topperformer-player-img"
           />

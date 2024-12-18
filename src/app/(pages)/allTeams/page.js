@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Row, Col, Select, Input } from "antd";
+import { Card, Row, Col, Select, Input, Spin } from "antd"; // Import Spin for loading indicator
 import Link from "next/link";
 
 const { Option } = Select;
@@ -21,12 +21,15 @@ export default function AllTeams() {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [showFilters, setShowFilters] = useState(true); // State to toggle filters visibility
   const [lastScrollY, setLastScrollY] = useState(0); // Track last scroll position
+  const [loading, setLoading] = useState(true); // State for loading
 
   useEffect(() => {
     const loadTeams = async () => {
+      setLoading(true); // Set loading to true before fetching data
       const teamsData = await fetchTeams();
       setTeams(teamsData);
       setFilteredTeams(teamsData);
+      setLoading(false); // Set loading to false after data is fetched
     };
     loadTeams();
   }, []);
@@ -110,7 +113,11 @@ export default function AllTeams() {
       {/* Main content */}
       <div className="allteams-main-container" style={{ margin: "280px 0" }}>
         <div className="allteams-container">
-          {filteredTeams.length > 0 ? (
+          {loading ? (
+            <div className="allteams-loading" style={{textAlign: "center"}}>
+              <Spin size="large" /> {/* Loading spinner */}
+            </div>
+          ) : filteredTeams.length > 0 ? (
             <Row gutter={[16, 16]} className="allteams-row">
               {filteredTeams.map((team) => (
                 <Col
@@ -123,7 +130,6 @@ export default function AllTeams() {
                   className="allteams-col"
                 >
                   <Link href={`/teamPlayers/${team._id}`} passHref>
-                  {/* console.log(team._id); */}
                     <Card
                       hoverable
                       className="allteams-card"

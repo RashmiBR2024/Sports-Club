@@ -2,9 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+html, body{
   background-color: #f9f9f9;
-  margin-top: 50px;
+  overflow-y: scroll;  /* Enable vertical scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
 }
 
 /* banner section */
@@ -239,9 +246,9 @@ a {
 /* } */ 
 
 .news-section{
-  background-color: #0f032d;
+  background-color: #21010c;
   color: white;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
   height: 430px;
 }
 
@@ -249,7 +256,7 @@ a {
   height: 400px;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: 80px;
+  /* margin-top: 80px; */
   overflow: hidden;
 }
 
@@ -331,8 +338,8 @@ a {
 .sponsor-section{
   background-color: #21010c;
   color: white;
-  margin-bottom: 40px;
-  height: 430px;
+  /* margin-bottom: 40px; */
+  height: auto;
 }
 
 .sponsor-video-scroll-wrapper {
@@ -1157,19 +1164,26 @@ a {
 
 /* top performer */
 .topperformer-container {
-  background-color: #0b132b; /* Dark background matching your design */
+  background-color: #041138; /* Dark background matching your design */
   color: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
+  /* align-items: center; */
+  /* padding: 40px 20px; */
+}
+
+.topperformer-player-img{
+  /* width: 30%; */
+  height: 400px;
+  object-fit: cover;
+  margin-bottom: 15%;
 }
 
 .topperformer-heading {
   font-family: 'Prosto One', sans-serif;
   font-size: 2.5rem;
-  margin-bottom: 30px;
-  text-align: center;
+  margin: 40px 30px;
+  /* text-align: auto; */
 }
 
 .topperformer-content {
@@ -1182,11 +1196,11 @@ a {
   animation: slide-in-left 1s ease-out;
 }
 
-.topperformer-player-img {
+/* .topperformer-player-img {
   width: auto;
   height: auto;
   object-fit: cover;
-}
+} */
 
 .topperformer-details {
   display: flex;
