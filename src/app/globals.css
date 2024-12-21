@@ -246,7 +246,7 @@ a {
 /* } */ 
 
 .news-section{
-  background-color: #21010c;
+  background-color: rgb(71, 2, 2);
   color: white;
   /* margin-bottom: 40px; */
   height: 430px;
@@ -336,7 +336,7 @@ a {
 
 /* sponsors and deals */
 .sponsor-section{
-  background-color: #21010c;
+  background-color: rgb(71, 2, 2);
   color: white;
   /* margin-bottom: 40px; */
   height: auto;
@@ -437,6 +437,7 @@ a {
   margin: 0;
   background-color: #f9f9f9;
   padding: 0px 0;
+  margin-top: 2%;
   /* height: auto; */
   text-align: center;
   z-index: 10;
@@ -654,12 +655,6 @@ a {
   overflow: hidden; */
 }
 
-.allteams-main-container{
-  /* margin-top: 200px; */
-  /* position: relative; */
-  
-}
-
 .allteams-heading-container{
   background-color: #f9f9f9;
   position: fixed; /* Fixes the heading */
@@ -744,7 +739,7 @@ a {
 .allteams-card-image {
   height: 300px;
   width: 100%;
-  object-fit: cover;
+  object-fit:fill;
   border-radius: 8px 8px 0 0;
 }
 
@@ -1182,7 +1177,7 @@ a {
 .topperformer-heading {
   font-family: 'Prosto One', sans-serif;
   font-size: 2.5rem;
-  margin: 40px 30px;
+  margin: 40px 60px;
   /* text-align: auto; */
 }
 
@@ -1266,4 +1261,78 @@ a {
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+
+/* team players header section of team detials  */
+.team-details {
+  padding: 5% 5% 3%;
+  font-family: 'Prosto One', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 20px; */
+  color: white;
+  background-color: #07141c;
+}
+
+.teamplayers-dynamic-division{
+  margin-bottom: 0;
+}
+
+.teamPlayers-page{
+  margin-top: 65px;
+}
+
+.team-details-container{
+  display: grid;
+  width: 100%;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  grid-template-columns: 1.5fr 2fr 1.5fr; /* 1/5, 2/5, 2/5 */
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.teamlogo{
+  align-items: center;
+  justify-content: center;
+}
+
+.team-logo-image{
+  width: auto;
+  height: 350px;
+}
+
+.team-info{
+  line-height: 40px;
+}
+
+.team-name{
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.team-profile-button{
+  background-color: #ffffff;
+  color: black;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.team-owner-coach{
+  background-color: #ffffff;
+  color: black;
+  padding: 15px 10px;
+  line-height: 30px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  padding-left: 20px;;
+}
+
+.teamplayers-cards-container{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Force exactly 5 cards per row */
+  gap: 16px; /* Space between cards */
 }

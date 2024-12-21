@@ -45,6 +45,7 @@ export default function BannerForm() {
   return (
     <div
       style={{
+        marginTop: "5rem",
         maxWidth: "900px",
         margin: "0 auto",
         padding: "1rem",

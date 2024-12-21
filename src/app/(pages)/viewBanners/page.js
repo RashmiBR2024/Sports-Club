@@ -112,7 +112,7 @@ export default function ViewBanner() {
     ];
 
     return (
-        <div style={{ padding: "20px" }}>
+        <div style={{ padding: "20px", marginTop: "10%" }}>
             <h1>Banner Management</h1>
             <div
                 style={{

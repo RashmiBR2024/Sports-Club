@@ -64,7 +64,7 @@ export default function BannerDetails() {
     }
 
     return (
-        <div style={{ padding: "20px" }}>
+        <div style={{ padding: "20px", marginTop: "10%"}}>
             <Title level={2}>Banner Details</Title>
             <div style={{ border: "1px solid #ddd", borderRadius: "8px", padding: "20px", marginTop: "20px" }}>
                 <Text strong>Title:</Text> <Text>{banner.title}</Text>
