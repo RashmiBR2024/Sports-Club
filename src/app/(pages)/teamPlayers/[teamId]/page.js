@@ -250,7 +250,7 @@ const TeamPlayers = () => {
               className="allplayers-card"
             >
               <Card.Meta title={player.name} description={player.specialization} />
-              <Link href={`/players/${player._id}`} className="allplayers-link" style={{ color: "white" }}>
+              <Link href={`/playerOverview/${player._id}`} className="allplayers-link" style={{ color: "white" }}>
                 View Profile
               </Link>
             </Card>

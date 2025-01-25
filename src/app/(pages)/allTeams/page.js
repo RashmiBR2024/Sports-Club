@@ -141,7 +141,17 @@ export default function AllTeams() {
                         />
                       }
                     >
-                      <h3 className="allteams-card-title">{team.name}</h3>
+                      <h3
+                        className="allteams-card-title text-black outline-black"
+                        style={{
+                          fontSize: "1.5rem", // Increase font size for better readability
+                          fontWeight: "bold", // Increase font weight for better visibility
+                          color: team.teamColor, // Set dynamic color for the text
+                          // WebkitTextStroke: "1px black", // Add black outline for better visibility
+                        }}
+                      >
+                        {team.name}
+                      </h3>
                     </Card>
                   </Link>
                 </Col>

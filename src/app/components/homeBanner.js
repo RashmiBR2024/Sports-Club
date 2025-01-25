@@ -8,18 +8,21 @@ const BannerSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isMuted, setIsMuted] = useState(false); // Start unmuted (set to false)
-  const iframeRef = useRef(null); // Reference for the iframe
+  const [isMuted, setIsMuted] = useState(true); // Default to muted
+  const iframeRef = useRef(null);
 
-  // Fetch banners from the backend
+  // Fetch banners from backend
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getBannerDataByStatus?isStatus=true`, {
-          headers: {
-            "x-api-key": process.env.NEXT_PUBLIC_API_AUTH_KEY,
-          },
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getBannerDataByStatus?isStatus=true`,
+          {
+            headers: {
+              "x-api-key": process.env.NEXT_PUBLIC_API_AUTH_KEY,
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -28,6 +31,7 @@ const BannerSlider = () => {
         const result = await response.json();
         if (result.success) {
           setBanners(result.data);
+          setCurrentIndex(0); // Reset to first banner when fetched
         } else {
           setError(result.error || "Failed to fetch banners.");
         }
@@ -44,7 +48,8 @@ const BannerSlider = () => {
     const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subscribe`);
     eventSource.onmessage = (event) => {
       const newBanners = JSON.parse(event.data);
-      setBanners(newBanners); // Update banners dynamically
+      setBanners(newBanners);
+      setCurrentIndex(0); // Reset to first banner when new data arrives
     };
 
     eventSource.onerror = () => {
@@ -57,116 +62,82 @@ const BannerSlider = () => {
     };
   }, []);
 
-  // Check if the content is a YouTube video link
+  // Check if content is a YouTube video
   const checkIfVideo = (url) => {
-    const youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/;
+    const youtubeRegex = /^(https?:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/;
     return youtubeRegex.test(url);
   };
 
-  // Extract video ID from YouTube URL
+  // Extract YouTube video ID
   const getVideoId = (url) => {
-    const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]+)/;
+    const youtubeRegex =
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]+)/;
     const match = url.match(youtubeRegex);
     return match ? match[1] : null;
   };
 
-  // Generate YouTube thumbnail URL
-  const generateThumbnail = (url) => {
-    const videoId = getVideoId(url);
-    return videoId ? `https://img.youtube.com/vi/${videoId}/0.jpg` : url;
-  };
-
-  // Navigate to the next banner
+  // Navigate to next banner
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
   };
 
-  // Navigate to the previous banner
+  // Navigate to previous banner
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? banners.length - 1 : prevIndex - 1
     );
   };
 
-  // Handle video display logic (play video for `displayDuration` seconds)
+  // Auto-play next slide based on display duration
   useEffect(() => {
-    const banner = banners[currentIndex];
-    if (banner) {
-      // Set a timer for video or image banner display duration
+    if (banners.length > 0) {
       const timer = setTimeout(() => {
         nextSlide();
-      }, banner.displayDuration * 1000); // Slide after the duration for images and videos
-  
-      return () => clearTimeout(timer); // Cleanup timeout
+      }, banners[currentIndex]?.displayDuration * 1000 || 5000);
+
+      return () => clearTimeout(timer);
     }
   }, [currentIndex, banners]);
-  
 
+  // Toggle mute for YouTube video
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
   };
 
-  useEffect(() => {
-    const iframeElement = iframeRef.current;
-  
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // If the iframe is in view, resume the video by setting the autoplay
-            iframeElement.src = `${banners[currentIndex].content_url.replace(
-              "watch?v=",
-              "embed/"
-            )}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=1`;
-          } else {
-            // If the iframe is out of view, stop the video
-            iframeElement.src = "";  // This stops the video by clearing the src
-          }
-        });
-      },
-      {
-        threshold: 0.5, // Trigger the observer when 50% of the iframe is visible
-      }
-    );
-  
-    if (iframeElement) {
-      observer.observe(iframeElement); // Start observing the iframe
-    }
-  
-    // Cleanup the observer when the component is unmounted
-    return () => {
-      if (iframeElement) {
-        observer.unobserve(iframeElement);
-      }
-    };
-  }, [currentIndex, banners, isMuted]);
-  
-
+  // Ensure only banners meant for "home" page are displayed
+  const shouldDisplayBanner = (displayOnPages) => {
+    if (!displayOnPages || displayOnPages.length === 0) return true;
+    return displayOnPages.includes("home");
+  };
 
   if (loading) return <div>Loading banners...</div>;
   if (error) return <div>Error: {error}</div>;
   if (banners.length === 0) return <div>No banners available.</div>;
 
+  // Filter banners before rendering
+  const filteredBanners = banners.filter((banner) =>
+    shouldDisplayBanner(banner.displayOnPages)
+  );
+
   return (
     <div className="banner-slider">
-      {/* Main banner */}
-      {banners.length > 0 && banners[currentIndex] && (
+      {filteredBanners.length > 0 && filteredBanners[currentIndex] && (
         <div className="main-banner-container">
-          {checkIfVideo(banners[currentIndex].content_url) ? (
+          {checkIfVideo(filteredBanners[currentIndex].content_url) ? (
             <>
               <iframe
+                key={currentIndex} // Forces React to reload iframe on slide change
                 ref={iframeRef}
                 width="100%"
                 height="500px"
-                src={`${banners[currentIndex].content_url.replace(
+                src={`${filteredBanners[currentIndex].content_url.replace(
                   "watch?v=",
                   "embed/"
-                )}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=1`}  // Control mute via state
+                )}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=1&playsinline=1`}
                 frameBorder="0"
                 allow="autoplay; encrypted-media; fullscreen"
                 allowFullScreen
                 title="Video Banner"
-                muted={isMuted} // Muting is controlled through this state
                 onError={() => console.error("Failed to load video")}
               />
               <button
@@ -184,7 +155,7 @@ const BannerSlider = () => {
                   cursor: "pointer",
                 }}
               >
-                {isMuted ? "UnMute" : "Mute"} {/* Toggle text */}
+                {isMuted ? "UnMute" : "Mute"}
               </button>
             </>
           ) : (
@@ -192,19 +163,18 @@ const BannerSlider = () => {
               <div
                 className="main-banner-background"
                 style={{
-                  backgroundImage: `url(${banners[currentIndex].content_url})`,
+                  backgroundImage: `url(${filteredBanners[currentIndex].content_url})`,
                 }}
               ></div>
               <img
-                src={banners[currentIndex].content_url}
+                src={filteredBanners[currentIndex].content_url}
                 alt="Banner"
                 className="main-banner-image"
               />
             </>
           )}
 
-          {/* Banner content with title, subtitle, and button */}
-          {banners[currentIndex].isText && (
+          {filteredBanners[currentIndex].isText && (
             <div
               className="main-banner-content"
               style={{
@@ -218,49 +188,39 @@ const BannerSlider = () => {
             >
               <h1
                 style={{
-                  fontSize: "36px", // Adjust size as per requirement
-                  fontFamily: "Prosto One, sans-serif", // Apply Prosto One font
+                  fontSize: "26px",
+                  fontFamily: "Prosto One, sans-serif",
                   margin: 0,
                 }}
               >
-                {banners[currentIndex].title}
+                {filteredBanners[currentIndex].title}
               </h1>
-              <h2
-                style={{
-                  fontSize: "24px", // Adjust size for subtitle
-                  margin: "10px 0",
-                }}
-              >
-                {banners[currentIndex].subTitle}
+              <h2 style={{ fontSize: "14px", margin: "10px 0" }}>
+                {filteredBanners[currentIndex].subTitle}
               </h2>
-              {banners[currentIndex].isButton && (
+              {filteredBanners[currentIndex].isButton && (
                 <a
                   href={
-                    checkIfVideo(banners[currentIndex].content_url)
+                    checkIfVideo(filteredBanners[currentIndex].content_url)
                       ? `https://www.youtube.com/watch?v=${getVideoId(
-                          banners[currentIndex].content_url
+                          filteredBanners[currentIndex].content_url
                         )}`
-                      : banners[currentIndex].button_url || "#"
+                      : filteredBanners[currentIndex].button_url || "#"
                   }
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    marginBottom: '35px',
-                    width: "auto",
+                    marginBottom: "35px",
                     padding: "12px 20px",
                     backgroundColor: "white",
                     color: "black",
-                    border: "none",
                     fontWeight: "bold",
                     borderRadius: "4px",
-                    cursor: "pointer",
                     fontSize: "16px",
                     textDecoration: "none",
-                    display: "inline-block",
-                    marginTop: "10px",
                   }}
                 >
-                  {banners[currentIndex].buttonName}
+                  {filteredBanners[currentIndex].buttonName}
                 </a>
               )}
             </div>
@@ -268,7 +228,6 @@ const BannerSlider = () => {
         </div>
       )}
 
-      {/* Navigation Arrows */}
       <button className="arrow left" onClick={prevSlide}>
         <LeftOutlined style={{ fontSize: "24px" }} />
       </button>

@@ -162,7 +162,7 @@ const AllPlayers = () => {
               className="allplayers-card"
             >
               <Card.Meta title={user.name} description={user.specialization} />
-              <Link href={`/players/${user._id}`} className="allplayers-link" style={{color: "white"}}>
+              <Link href={`/playerOverview/${user._id}`} className="allplayers-link" style={{color: "white"}}>
                 View Profile
               </Link>
             </Card>

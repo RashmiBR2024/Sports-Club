@@ -1,4 +1,4 @@
-import BannerSlider from "./components/banner";
+import BannerSlider from "./components/homeBanner";
 import WhatAreYouLookingFor from "./components/whatAreYouLookingFor";
 import Location from "./components/Location";
 import FollowUs from "./components/FollowUs";

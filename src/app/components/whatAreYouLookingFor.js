@@ -26,7 +26,7 @@ const WhatAreYouLookingFor = () => {
       image:
         "https://static.vecteezy.com/system/resources/previews/035/979/025/non_2x/cricket-bat-and-ball-badge-illustration-vector.jpg",
       title: "Matches",
-      link: "/page2",
+      link: "/matches",
     },
     {
       id: 3,
