@@ -1,11 +1,12 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState } from "react";
 
-export default function Home() {
+const Home = () => {
+  
   return (
-   <div>
-    <h1>
-      hello
-    </h1>
-   </div>
+    <div className="container">
+    </div>
   );
-}
+};
+
+export default Home;
