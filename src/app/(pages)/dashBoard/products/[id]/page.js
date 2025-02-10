@@ -12,7 +12,7 @@ const { TabPane } = Tabs;
 const UpdateProduct = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const productId = pathname;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ame.split('/').pop();
+  const productId = pathname.split('/').pop(); // Corrected line
   const [form] = Form.useForm();
   const [variants, setVariants] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,7 +55,7 @@ const UpdateProduct = () => {
 
   const handleAddSize = (index) => {
     const newVariants = [...variants];
-    newVariants[index].sizes.push({ size: '', mrp: '', sellingPrice: '', discount: '', quantity: '', barcode: '', sku: '' });
+    newVariants[index].sizes.push({ size: '', mrp: '', sellingPrice: '', discount: '', quantity: '', barcode: '', purchasePrice: '' });
     setVariants(newVariants);
   };
 
@@ -448,12 +448,12 @@ const UpdateProduct = () => {
                       </Row>
                       <Row gutter={16}>
                         <Col xs={24} sm={12}>
-                          <Form.Item label="SKU">
+                          <Form.Item label="Purchase Price">
                             <Input
-                              value={size.sku}
+                              value={size.purchasePrice}
                               onChange={(e) => {
                                 const newVariants = [...variants];
-                                newVariants[variantIndex].sizes[sizeIndex].sku = e.target.value;
+                                newVariants[variantIndex].sizes[sizeIndex].purchasePrice = e.target.value;
                                 setVariants(newVariants);
                               }}
                               disabled={!variant.isStatus}
@@ -510,7 +510,7 @@ const UpdateProduct = () => {
           <Button type="primary" onClick={handleSubmit} loading={loading}>
             Save Changes
           </Button>
-          <Button onClick={() => router.push('/products')}>Cancel</Button>
+          <Button onClick={() => router.push('/dashBoard/products')}>Cancel</Button>
         </Space>
       </div>
     </div>

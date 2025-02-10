@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --navbar-height: 100px; /* Adjust based on actual height */
+}
+
 html, body{
   background-color: #f9f9f9;
   overflow-y: scroll;  /* Enable vertical scrolling */
@@ -21,7 +25,7 @@ body::-webkit-scrollbar {
   width: 100%;
   height: auto; /* Adjust height as needed */
   overflow: hidden;
-  margin-top: 5%;
+  margin-top: -5%;
   margin-bottom: 10px;
   touch-action: pan-y; /* Allows horizontal swiping */
 }
@@ -248,7 +252,7 @@ a {
 
 .news-section{
   background-color: rgb(71, 2, 2);
-  color: white;
+  color: rgb(255, 255, 255);
   /* margin-bottom: 40px; */
   height: 430px;
 }
@@ -288,6 +292,15 @@ a {
 }
 
 .video-container {
+  height: 200px;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  perspective: 100px;
+}
+
+.media-container {
   height: 200px;
   width: 350px;
   display: flex;
@@ -337,7 +350,7 @@ a {
 
 /* sponsors and deals */
 .sponsor-section{
-  background-color: rgb(71, 2, 2);
+  background-color: rgb(208, 205, 205);
   color: white;
   /* margin-bottom: 40px; */
   height: auto;
@@ -438,18 +451,18 @@ a {
   margin: 0;
   background-color: #f9f9f9;
   padding: 0px 0;
-  margin-top: 2%;
+  margin-top: -7%;
   /* height: auto; */
   text-align: center;
-  z-index: 10;
+  z-index: 1;
   transition: transform 0.3s ease-in-out;
 }
 
 .allplayers-cards-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Force exactly 5 cards per row */
-  gap: 16px; /* Space between cards */
-  margin-top: 150px; /* Adjust top margin */
+  grid-template-columns: repeat(6, 1fr); /* Force exactly 5 cards per row */
+  gap: 14px; /* Space between cards */
+  /* margin-top: 15px; Adjust top margin */
 }
 
 .allplayers-card-wrapper{
@@ -555,7 +568,7 @@ a {
 }
 
 .allplayers-card-image {
-  height: 200px;
+  height: 180px;
   overflow: hidden;
 }
 
@@ -614,7 +627,6 @@ a {
 .allteams-dynamic-division {
   position: fixed;
   top: 0;
-
   background-color: #f9f9f9;
   z-index: 10;
   transition: transform 0.3s ease-in-out;
@@ -1285,7 +1297,7 @@ a {
 }
 
 .teamPlayers-page{
-  margin-top: 65px;
+  margin-top: -5%;
 }
 
 .team-details-container{
@@ -1347,7 +1359,7 @@ a {
   height: 50%;
   background-color: black;
   color: white;
-  padding: 100px 70px 5px 70px; 
+  padding: 80px 70px 5px 70px; 
   display: flex;
   flex-direction: column;
 }
@@ -1518,7 +1530,7 @@ table tbody tr:last-child td {
   width: 100%;
   height: auto; 
   overflow: hidden;
-  margin-top: 5%;
+  margin-top: -5%;
   margin-bottom: 10px;
   touch-action: pan-y; /* Allows horizontal swiping */
 }
@@ -2024,4 +2036,68 @@ table tbody tr:last-child td {
 
 .team-2{
   animation: slideInRight 1s ease-out forwards;
+}
+
+/* news-media section  */
+.news-media-video-button{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: white;
+  color: black;
+  border: none;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.video-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* sponsors and deals */
+.sponsors-img-button{
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.media-thumbnail{
+  width: 100%;
+  height: 200px;
+  object-fit:contain;
+}
+
+
+/* Change font size for table headers */
+.ant-table-thead > tr > th {
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+
+/* Change font size for table body */
+.ant-table-tbody > tr > td {
+  font-size: 13px !important;
+}
+
+/* Optional: Adjust table padding */
+.ant-table-thead th, 
+.ant-table-tbody td {
+  padding: 12px !important;
 }

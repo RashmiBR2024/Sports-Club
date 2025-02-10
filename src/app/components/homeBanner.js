@@ -5,13 +5,13 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 const BannerSlider = () => {
   const [banners, setBanners] = useState([]);
+  const [filteredBanners, setFilteredBanners] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isMuted, setIsMuted] = useState(true); // Default to muted
+  const [isMuted, setIsMuted] = useState(true);
   const iframeRef = useRef(null);
 
-  // Fetch banners from backend
   useEffect(() => {
     const fetchBanners = async () => {
       try {
@@ -30,8 +30,13 @@ const BannerSlider = () => {
 
         const result = await response.json();
         if (result.success) {
-          setBanners(result.data);
-          setCurrentIndex(0); // Reset to first banner when fetched
+          const homeBanners = result.data.filter((banner) =>
+            banner.displayOnPages?.includes("home")
+          );
+
+          setBanners(homeBanners);
+          setFilteredBanners(homeBanners);
+          setCurrentIndex(0);
         } else {
           setError(result.error || "Failed to fetch banners.");
         }
@@ -43,32 +48,23 @@ const BannerSlider = () => {
     };
 
     fetchBanners();
-
-    // Subscribe to server-sent events for real-time updates
-    const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subscribe`);
-    eventSource.onmessage = (event) => {
-      const newBanners = JSON.parse(event.data);
-      setBanners(newBanners);
-      setCurrentIndex(0); // Reset to first banner when new data arrives
-    };
-
-    eventSource.onerror = () => {
-      console.error("Error with event source");
-      eventSource.close();
-    };
-
-    return () => {
-      eventSource.close();
-    };
   }, []);
 
-  // Check if content is a YouTube video
+  useEffect(() => {
+    if (filteredBanners.length > 0) {
+      const timer = setTimeout(() => {
+        nextSlide();
+      }, filteredBanners[currentIndex]?.displayDuration * 1000 || 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, filteredBanners]);
+
   const checkIfVideo = (url) => {
     const youtubeRegex = /^(https?:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/;
     return youtubeRegex.test(url);
   };
 
-  // Extract YouTube video ID
   const getVideoId = (url) => {
     const youtubeRegex =
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]+)/;
@@ -76,64 +72,41 @@ const BannerSlider = () => {
     return match ? match[1] : null;
   };
 
-  // Navigate to next banner
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % filteredBanners.length);
   };
 
-  // Navigate to previous banner
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? banners.length - 1 : prevIndex - 1
+      prevIndex === 0 ? filteredBanners.length - 1 : prevIndex - 1
     );
   };
 
-  // Auto-play next slide based on display duration
-  useEffect(() => {
-    if (banners.length > 0) {
-      const timer = setTimeout(() => {
-        nextSlide();
-      }, banners[currentIndex]?.displayDuration * 1000 || 5000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [currentIndex, banners]);
-
-  // Toggle mute for YouTube video
   const toggleMute = () => {
     setIsMuted((prev) => !prev);
   };
 
-  // Ensure only banners meant for "home" page are displayed
-  const shouldDisplayBanner = (displayOnPages) => {
-    if (!displayOnPages || displayOnPages.length === 0) return true;
-    return displayOnPages.includes("home");
-  };
-
   if (loading) return <div>Loading banners...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (banners.length === 0) return <div>No banners available.</div>;
+  if (filteredBanners.length === 0) return <div>No banners available.</div>;
 
-  // Filter banners before rendering
-  const filteredBanners = banners.filter((banner) =>
-    shouldDisplayBanner(banner.displayOnPages)
-  );
+  const currentBanner = filteredBanners[currentIndex];
 
   return (
     <div className="banner-slider">
-      {filteredBanners.length > 0 && filteredBanners[currentIndex] && (
+      {currentBanner && (
         <div className="main-banner-container">
-          {checkIfVideo(filteredBanners[currentIndex].content_url) ? (
+          {checkIfVideo(currentBanner.content_url) ? (
             <>
               <iframe
-                key={currentIndex} // Forces React to reload iframe on slide change
+                key={currentIndex}
                 ref={iframeRef}
                 width="100%"
                 height="500px"
-                src={`${filteredBanners[currentIndex].content_url.replace(
+                src={`${currentBanner.content_url.replace(
                   "watch?v=",
                   "embed/"
-                )}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=1&playsinline=1`}
+                )}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=1&playsinline=1&rel=0&modestbranding=1&showinfo=0`}
                 frameBorder="0"
                 allow="autoplay; encrypted-media; fullscreen"
                 allowFullScreen
@@ -163,64 +136,76 @@ const BannerSlider = () => {
               <div
                 className="main-banner-background"
                 style={{
-                  backgroundImage: `url(${filteredBanners[currentIndex].content_url})`,
+                  backgroundImage: `url(${currentBanner.content_url})`,
                 }}
               ></div>
               <img
-                src={filteredBanners[currentIndex].content_url}
+                src={currentBanner.content_url}
                 alt="Banner"
                 className="main-banner-image"
               />
             </>
           )}
 
-          {filteredBanners[currentIndex].isText && (
+          {currentBanner.isText && (
             <div
               className="main-banner-content"
               style={{
                 position: "absolute",
                 bottom: "10px",
                 left: "50px",
-                color: "white",
+                color: currentBanner.titleFontColor || "#ffffff", // ✅ Title Font Color from DB
+                fontFamily: currentBanner.fontStyle || "Prosto One, sans-serif",
                 zIndex: 10,
                 padding: "10px",
               }}
             >
               <h1
                 style={{
-                  fontSize: "26px",
-                  fontFamily: "Prosto One, sans-serif",
+                  fontSize: `${currentBanner.titleFontSize || 26}px`, // ✅ Dynamic Font Size
+                  color: currentBanner.titleFontColor || "#ffffff", // ✅ Dynamic Font Color
+                  fontFamily: currentBanner.fontStyle || "Prosto One, sans-serif",
                   margin: 0,
                 }}
               >
-                {filteredBanners[currentIndex].title}
+                {currentBanner.title}
               </h1>
-              <h2 style={{ fontSize: "14px", margin: "10px 0" }}>
-                {filteredBanners[currentIndex].subTitle}
+              <h2
+                style={{
+                  fontSize: `${currentBanner.subTitleFontSize || 14}px`, // ✅ Dynamic Subtitle Size
+                  color: currentBanner.subTitleFontColor || "#ffffff", // ✅ Dynamic Subtitle Color
+                  fontFamily: currentBanner.fontStyle || "Prosto One, sans-serif",
+                  margin: "10px 0",
+                }}
+              >
+                {currentBanner.subTitle}
               </h2>
-              {filteredBanners[currentIndex].isButton && (
+              {currentBanner.isButton && (
                 <a
                   href={
-                    checkIfVideo(filteredBanners[currentIndex].content_url)
+                    checkIfVideo(currentBanner.content_url)
                       ? `https://www.youtube.com/watch?v=${getVideoId(
-                          filteredBanners[currentIndex].content_url
+                          currentBanner.content_url
                         )}`
-                      : filteredBanners[currentIndex].button_url || "#"
+                      : currentBanner.button_url || "#"
                   }
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
-                    marginBottom: "35px",
+                    marginBottom: "5%",
                     padding: "12px 20px",
-                    backgroundColor: "white",
-                    color: "black",
+                    backgroundColor: currentBanner.buttonBackgroundColor || "white", // ✅ Dynamic Background Color
+                    color: currentBanner.buttonFontColor || "black", // ✅ Dynamic Font Color
                     fontWeight: "bold",
                     borderRadius: "4px",
-                    fontSize: "16px",
+                    fontSize: `${currentBanner.buttonFontSize || 14}px`, // ✅ Dynamic Font Size
                     textDecoration: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    display: "inline-block",
                   }}
                 >
-                  {filteredBanners[currentIndex].buttonName}
+                  {currentBanner.buttonName}
                 </a>
               )}
             </div>

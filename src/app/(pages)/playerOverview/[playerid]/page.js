@@ -62,7 +62,7 @@ const PlayerOverview = () => {
   
 
   return (
-    <div className="playeroverview-container" style={{ marginTop: "5%" }}>
+    <div className="playeroverview-container" style={{ marginTop: "-5%" }}>
     <div className="playeroverview">
       <div className="playeroverview-head">
         <h1 className="playeroverview-heading1">Player Overview</h1>

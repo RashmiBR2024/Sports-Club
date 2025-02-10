@@ -102,7 +102,7 @@ const AllPlayers = () => {
     <div className="allplayers-container">
       {showDynamicDiv && (
         <div className="allplayers-dynamic-division">
-          <h1 className="allplayers-heading" style={{marginTop: "80px"}}>All Players</h1>
+          <h1 className="allplayers-heading" style={{marginTop: "70px"}}>All Players</h1>
           <div className="allplayers-filters">
             <div className="allplayers-dropdowns">
               <Select
@@ -133,7 +133,7 @@ const AllPlayers = () => {
                 )}
               </Select>
             </div>
-            <div className="allplayers-search">
+            <div className="allplayers-search" style={{ marginRight: "1.5%" }}>
               <Input
                 placeholder="Search Players"
                 value={searchQuery}
@@ -145,7 +145,7 @@ const AllPlayers = () => {
         </div>
       )}
 
-      <div className="allplayers-cards-container" style={{marginTop: "240px"}}>
+      <div className="allplayers-cards-container" style={{marginTop: "13%"}}>
         {filteredUsersMemo.map((user) => (
           <div className="allplayers-card-wrapper" key={user._id}>
             <Card
@@ -153,7 +153,7 @@ const AllPlayers = () => {
               cover={
                 <div className="allplayers-card-image">
                   <img
-                    alt={user.name}
+                    alt={user.name?.charAt(0).toUpperCase() + user.name?.slice(1).toLowerCase()}
                     src={user.profilePicture || "/default-profile.jpg"}
                     className="allplayers-image"
                   />
@@ -161,7 +161,13 @@ const AllPlayers = () => {
               }
               className="allplayers-card"
             >
-              <Card.Meta title={user.name} description={user.specialization} />
+              <div>
+              <Card.Meta style={{ fontSize: "12px" }} title={user.name?.charAt(0).toUpperCase() + user.name?.slice(1).toLowerCase()}  />
+              </div>
+              <div style={{ height: "45px" }}>
+              <Card.Meta style={{ fontSize: "12px" }} description={user.specialization?.join(" | ")} />
+              </div>
+
               <Link href={`/playerOverview/${user._id}`} className="allplayers-link" style={{color: "white"}}>
                 View Profile
               </Link>

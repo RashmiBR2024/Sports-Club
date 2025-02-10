@@ -36,7 +36,7 @@ export default function EmailLogin() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: '#f0f2f5' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: '#f0f2f5', marginTop: "-65px" }}>
       <div style={{ width: '300px', padding: '2rem', background: '#fff', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}>
         <img src="/sports_logo/app_bar_logo_B.png" alt="Logo" style={{ display: 'block', margin: '0 auto 1rem', width: '150px' }} />
         <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Login</h2>

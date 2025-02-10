@@ -189,7 +189,7 @@ const TeamPlayers = () => {
       <div className="allplayers-container">
       
       <div className="teamplayers-dynamic-division">
-        <h1 className="allplayers-heading" style={{ marginTop: "80px" }}>
+        <h1 className="allplayers-heading" style={{ marginTop: "40px" }}>
           Team Players
         </h1>
         <div className="allplayers-filters">

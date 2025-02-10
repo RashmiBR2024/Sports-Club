@@ -22,7 +22,7 @@ const AddProduct = () => {
 
   const handleAddSize = (index) => {
     const newVariants = [...variants];
-    newVariants[index].sizes.push({ size: '', mrp: '', sellingPrice: '', discount: '', quantity: '', barcode: '', sku: '' });
+    newVariants[index].sizes.push({ size: '', mrp: '', sellingPrice: '', discount: '', quantity: '', barcode: '', purchasePrice: '' });
     setVariants(newVariants);
   };
 
@@ -403,13 +403,13 @@ const AddProduct = () => {
                       </Col>
                       <Col xs={24} sm={4}>
                         <Form.Item
-                          label="SKU"
+                          label="Purchase Price"
                         >
                           <Input
-                            value={size.sku}
+                            value={size.purchasePrice}
                             onChange={(e) => {
                               const newVariants = [...variants];
-                              newVariants[variantIndex].sizes[sizeIndex].sku = e.target.value;
+                              newVariants[variantIndex].sizes[sizeIndex].purchasePrice = e.target.value;
                               setVariants(newVariants);
                             }}
                           />

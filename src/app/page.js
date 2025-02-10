@@ -12,7 +12,8 @@ const Home = () => {
       <BannerSlider/>
       <WhatAreYouLookingFor/>
       <NewsMediaSection/>
-      <TopPerformerForm/>
+      <br/>
+      {/* <TopPerformerForm/> */}
       <SponsorsAndDeals/>
       <Location/>
       <FollowUs/>

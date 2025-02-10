@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 
 const SponsorsAndDeals = () => {
-  const [videos, setVideos] = useState([]);
+  const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchVideos = async () => {
+    const fetchMedia = async () => {
       try {
+        console.log("Fetching media...");
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/getBannerDataByStatus?isStatus=true`,
           {
@@ -24,19 +25,30 @@ const SponsorsAndDeals = () => {
         }
 
         const result = await response.json();
+        console.log("API Response:", result);
+
         if (result.success) {
-          setVideos(result.data.filter((banner) => checkIfVideo(banner.content_url)));
+          const filteredMedia = result.data.filter((banner) => {
+            return (
+              banner.isStatus === true &&
+              banner.displayOnPages?.includes("sponsorsanddeals")
+            );
+          });
+
+          console.log("Filtered Media:", filteredMedia);
+          setMedia(filteredMedia);
         } else {
-          setError(result.error || "Failed to fetch videos.");
+          setError(result.error || "Failed to fetch media.");
         }
       } catch (err) {
-        setError(err.message || "An error occurred while fetching videos.");
+        console.error("Fetch error:", err);
+        setError(err.message || "An error occurred while fetching media.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchVideos();
+    fetchMedia();
   }, []);
 
   const checkIfVideo = (url) => {
@@ -45,62 +57,120 @@ const SponsorsAndDeals = () => {
   };
 
   const getVideoId = (url) => {
-    const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]+)/;
+    const youtubeRegex =
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]+)/;
     const match = url.match(youtubeRegex);
     return match ? match[1] : null;
   };
 
-  const handleVideoClick = (url) => {
-    const videoId = getVideoId(url);
-    if (videoId) {
-      window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
-    }
-  };
-
-  if (loading) return <div>Loading videos...</div>;
+  if (loading) return <div>Loading media...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (videos.length === 0) return <div>No videos available.</div>;
+  if (media.length === 0) return <div>No media available.</div>;
 
   return (
     <section className="sponsor-section">
       <div className="horizontal-scroll">
-      <div className="header">
-        <h1 style={{ fontFamily: "'Prosto One', sans-serif", fontSize: "30px", marginTop: "50px"}}>Sponsors And Deals</h1>
-      </div>
-      <div className="news-block">
-        <div className={`new-slider ${videos.length <= 4 ? "paused" : ""}`}>
-          <div className="sponsor-video-scroll-wrapper">
-            {/* Original set of videos */}
-            {videos.map((video, index) => (
-              <div
-                key={`video-${index}`}
-                className="video-container"
-                onClick={() => handleVideoClick(video.content_url)}
-              >
-                <img
-                  src={`https://img.youtube.com/vi/${getVideoId(video.content_url)}/0.jpg`}
-                  alt={`Video ${index + 1}`}
-                  className="video-thumbnail"
-                />
-              </div>
-            ))}
-            {/* Duplicate set of videos for infinite scrolling */}
-            {videos.map((video, index) => (
-              <div
-                key={`duplicate-video-${index}`}
-                className="video-container"
-                onClick={() => handleVideoClick(video.content_url)}
-              >
-                <img
-                  src={`https://img.youtube.com/vi/${getVideoId(video.content_url)}/0.jpg`}
-                  alt={`Video Duplicate ${index + 1}`}
-                  className="video-thumbnail"
-                />
-              </div>
-            ))}
+        <div className="header">
+          <h1
+            style={{
+              fontFamily: "'Prosto One', sans-serif",
+              fontSize: "30px",
+              color: "black",
+              marginTop: "50px",
+            }}
+          >
+            Sponsors And Deals
+          </h1>
+        </div>
+        <div className="news-block">
+          <div className={`new-slider ${media.length <= 4 ? "paused" : ""}`}>
+            <div className="sponsor-video-scroll-wrapper">
+              {/* Original Set of Media */}
+              {media.map((item, index) => (
+                <div
+                  key={`media-${index}`}
+                  className="media-container"
+                  onClick={() =>
+                    item.content_url && window.open(item.content_url, "_blank")
+                  }
+                >
+                  {/* Handle Videos */}
+                  {checkIfVideo(item.content_url) ? (
+                    <img
+                      src={`https://img.youtube.com/vi/${getVideoId(
+                        item.content_url
+                      )}/0.jpg`}
+                      alt={`Video ${index}`}
+                      className="media-thumbnail"
+                    />
+                  ) : (
+                    /* Handle Images */
+                    <img
+                      src={item.content_url}
+                      alt={`Image ${index}`}
+                      className="media-thumbnail"
+                    />
+                  )}
+
+                  {/* Display button if available */}
+                  {item.isButton && item.buttonName && item.button_url && (
+                    <button
+                      className="sponsors-img-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(item.button_url, "_blank");
+                      }}
+                    >
+                      {item.buttonName}
+                    </button>
+                  )}
+                </div>
+              ))}
+
+              {/* Duplicate the Entire Set for Infinite Scrolling */}
+              {media.map((item, index) => (
+                <div
+                  key={`duplicate-media-${index}`}
+                  className="media-container"
+                  onClick={() =>
+                    item.content_url && window.open(item.content_url, "_blank")
+                  }
+                >
+                  {/* Handle Videos */}
+                  {checkIfVideo(item.content_url) ? (
+                    <img
+                      src={`https://img.youtube.com/vi/${getVideoId(
+                        item.content_url
+                      )}/0.jpg`}
+                      alt={`Video Duplicate ${index}`}
+                      className="media-thumbnail"
+                    />
+                  ) : (
+                    /* Handle Images */
+                    <img
+                      src={item.content_url}
+                      alt={`Image Duplicate ${index}`}
+                      className="media-thumbnail"
+                    />
+                  )}
+
+                  {/* Display button if available */}
+                  {item.isButton && item.buttonName && item.button_url && (
+                    <button
+                      className="sponsors-img-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(item.button_url, "_blank");
+                      }}
+                    >
+                      {item.buttonName}
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </section>
   );

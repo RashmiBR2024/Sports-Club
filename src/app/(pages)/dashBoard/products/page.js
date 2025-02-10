@@ -55,7 +55,7 @@ const ProductList = () => {
     };
 
     const handleAddProduct = () => {
-        router.push('/products/add');
+        router.push('/dashBoard/products/add');
     };
 
     const handlePageChange = (page, pageSize) => {
@@ -104,9 +104,9 @@ const ProductList = () => {
             dataIndex: 'description',
             key: 'description',
             render: text => (
-                <Text ellipsis={{ tooltip: text }} style={{ maxWidth: 200, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {text}
-                </Text>
+            <Text ellipsis={{ tooltip: text }} style={{ maxWidth: 80,  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {text}
+            </Text>
             ),
         },
         {
@@ -137,7 +137,7 @@ const ProductList = () => {
             title: 'Actions',
             key: 'actions',
             render: (_, record) => (
-                <Button onClick={() => router.push(`/products/${record._id}`)}>Edit</Button>
+                <Button onClick={() => router.push(`/dashBoard/products/${record._id}`)}>Edit</Button>
             ),
         },
     ];
@@ -164,7 +164,13 @@ const ProductList = () => {
                         rowKey="_id"
                         pagination={false}
                         bordered
-                        style={{ marginBottom: '16px' }}
+                        scroll={{ x: "100%", y: "calc(100vh - 250px)" }} // Enables horizontal & vertical scrolling
+                        style={{
+                            maxWidth: "100%", // Prevents overflow
+                            overflowX: "auto",
+                            backgroundColor: "#fff",
+                            borderRadius: "8px",
+                        }}
                     />
                 ) : (
                     // Mobile View - Cards
@@ -226,25 +232,53 @@ const ProductList = () => {
             </Space>
 
             <style jsx>{`
+                /* Change font size for table headers */
+                .ant-table-thead th {
+                    font-size: 10px !important; /* Adjust header font size */
+                    font-weight: bold; /* Optional: Make header text bold */
+                }
+
+                /* Change font size for table body (rows) */
+                .ant-table-tbody td {
+                    font-size: 13px !important; /* Adjust row font size */
+                }
+
+                /* Optional: Adjust padding for better alignment */
+                .ant-table-thead th,
+                .ant-table-tbody td {
+                    padding: 10px;
+                }
+                    
                 .product-list {
                     display: flex;
                     flex-direction: column;
+                    overflow-x: auto;
                 }
 
-                @media (max-width: 768px) {
-                    .product-list {
-                        display: block;
+                .ant-table-wrapper {
+                    max-width: 100%;
+                    overflow-x: auto;
+                }
+
+                .ant-table {
+                    width: 100%;
+                    border-radius: 8px;
+                    overflow: hidden;
+                }
+
+                .ant-table-container {
+                    border-radius: 8px;
+                }
+
+                @media (max-width: 1024px) {
+                    .ant-table {
+                        font-size: 12px; /* Smaller font for smaller screens */
                     }
-                    .ant-card {
-                        margin-bottom: 12px;
+                    .ant-table-thead th {
+                        font-size: 12px;
                     }
-                    .ant-btn-link {
-                        font-size: 14px;
-                        padding: 0;
-                    }
-                    .ant-card-cover img {
-                        object-fit: cover;
-                        max-height: 200px;
+                    .ant-table-tbody td {
+                        font-size: 12px;
                     }
                 }
             `}</style>

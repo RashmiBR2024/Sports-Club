@@ -79,7 +79,7 @@ export default function AllTeams() {
         className={`allteams-dynamic-division ${showFilters ? "visible" : "hidden"}`}
       >
         <div className="allteams-heading-container" style={{ width: "110%" }}>
-          <h1 className="allteams-heading" style={{ marginTop: "120px" }}>
+          <h1 className="allteams-heading" style={{ marginTop: "120px" , padding: "30px 0 10px 0 "}}>
             All Teams
           </h1>
           <div className="allteams-filters">
@@ -91,7 +91,8 @@ export default function AllTeams() {
                 className="allteams-dropdown"
                 style={{ textAlign: "left" }}
               >
-                <Option value="">All Years</Option>
+                <Option value="">All</Option>
+                <Option value="2025">2025</Option>
                 <Option value="2024">2024</Option>
                 <Option value="2023">2023</Option>
                 <Option value="2022">2022</Option>
@@ -111,7 +112,7 @@ export default function AllTeams() {
       </div>
 
       {/* Main content */}
-      <div className="allteams-main-container" style={{ margin: "280px 0" }}>
+      <div className="allteams-main-container" style={{ margin: "140px 0" }}>
         <div className="allteams-container">
           {loading ? (
             <div className="allteams-loading" style={{textAlign: "center"}}>
@@ -129,7 +130,7 @@ export default function AllTeams() {
                   key={team._id}
                   className="allteams-col"
                 >
-                  <Link href={`/teamPlayers/${team._id}`} passHref>
+                  <Link href={`allTeams/teamPlayers/${team._id}`} passHref>
                     <Card
                       hoverable
                       className="allteams-card"

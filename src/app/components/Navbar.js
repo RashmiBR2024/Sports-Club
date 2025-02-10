@@ -14,7 +14,8 @@ const Navbar = () => {
     // { label: "Points Table", key: "/points-table", link: "/points-table" },
     { label: "Teams", key: "/teams", link: "/allTeams" },
     { label: "Matches", key: "/matches", link: "/matches" },
-    { label: "Buy Products", key: "products", link: "https://sandhutsportsclub.com/products" },
+    { label: "Buy Products", key: "products", link: "/buyProducts" },
+    { label: "Pay Fees", key: "payfees", link: "/payFees" },
     // You can add a submenu if needed, for now it's commented out
     // { label: "More", key: "/more", link: "/more", subMenu: [...] }
   ];
@@ -25,15 +26,17 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-50 ">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-4 md:px-8">
+    <nav className="fixed h-24 pt-2 top-0 left-0 w-full bg-white shadow-md z-50 ">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-16 pt-3 px-4 md:px-8">
         {/* Logo */}
-        <div className="relative">
-          <img
-            src="/SSC logo.png" // Replace with your logo path
-            alt="Logo"
-            className="w-32 md:w-40 h-auto mt-16"
-          />
+        <div className="relative w-full" style={{ width: "400px" }}>
+        <img
+          src="/8-cropped.svg"
+          alt="Logo"
+          className="w-[320px] h-[100px]"
+          style={{ marginLeft: "-15px" }}
+          // onError={(e) => e.target.src = "8-cropped.svg"} // ✅ Fallback image
+        />        
         </div>
 
         {/* Hamburger Icon (visible on smaller devices) */}

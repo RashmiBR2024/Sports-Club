@@ -25,7 +25,9 @@ const VideoScroll = () => {
 
         const result = await response.json();
         if (result.success) {
-          setVideos(result.data.filter((banner) => checkIfVideo(banner.content_url)));
+          setVideos(result.data.filter((banner) =>banner.isStatus === true &&
+          banner.displayOnPages?.includes("news") &&
+          checkIfVideo(banner.content_url)));
         } else {
           setError(result.error || "Failed to fetch videos.");
         }
@@ -82,6 +84,19 @@ const VideoScroll = () => {
                   alt={`Video ${index + 1}`}
                   className="video-thumbnail"
                 />
+                {/* Display button if available */}
+                {video.isButton && video.buttonName && video.button_url && (
+                    <button
+                      className="news-media-video-button"
+                      
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(video.button_url, "_blank");
+                      }}
+                    >
+                      {video.buttonName}
+                    </button>
+                  )}
               </div>
             ))}
             {/* Duplicate set of videos for infinite scrolling */}

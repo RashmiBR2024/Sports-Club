@@ -26,7 +26,9 @@ export default function RootLayout({ children }) {
       />
         <AntdRegistry>
           <Navbar/>
-          {children}
+          <div className="pt-40"> {/* Ensures space for the fixed navbar */}
+            {children}
+          </div>
           <CustomFooter/>
         </AntdRegistry>
       </body>
